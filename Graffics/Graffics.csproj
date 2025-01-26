@@ -8,6 +8,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="AssimpNet" Version="5.0.0-beta1" />
       <PackageReference Include="OpenTK" Version="4.9.3" />
       <PackageReference Include="StbImageSharp" Version="2.30.15" />
     </ItemGroup>
@@ -35,6 +36,26 @@
       </Content>
       <None Remove="Resources\shade.jpg" />
       <Content Include="Resources\shade.jpg">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <None Remove="Resources\Shuttle\shuttle.fbx" />
+      <Content Include="Resources\Shuttle\shuttle.fbx">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <None Remove="Resources\Shuttle\metal.jpeg" />
+      <Content Include="Resources\Shuttle\metal.jpeg">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <None Remove="Resources\Xwing\xwing.gltf" />
+      <Content Include="Resources\Xwing\scene.gltf">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <None Remove="Resources\Xwing\scene.bin" />
+      <Content Include="Resources\Xwing\scene.bin">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <None Remove="Resources\sky-texture.jpg" />
+      <Content Include="Resources\sky-texture.jpg">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
     </ItemGroup>
