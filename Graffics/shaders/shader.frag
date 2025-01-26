@@ -45,11 +45,11 @@ uniform vec3 fogColor;
 vec3 CalcPointLight(vec3 color, vec3 normal, vec3 fragPos, vec3 viewDir, vec3 lightDir, vec3 attenuation, vec3 lightPostion);
 vec3 CalcSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir, vec3 lightDir);
 vec3 CalcDirLight(DirLight light, vec3 normal, vec3 fragPos, vec3 viewDir);
-float CalcFogFactor(vec3 fragPos);
+float CalcFogFactor(vec3 fragPos, float fogIntensity);
 
 void main()
 {
-    vec3 viewDir = vec3(0, 0, 0);
+    vec3 viewDir = normalize(-FragPos);
     vec3 norm = normalize(Normal);
     vec3 result = CalcDirLight(dirLight, norm, FragPos, viewDir);
     for (int i = 0; i < numPointLights; i++) {
@@ -60,7 +60,10 @@ void main()
         vec3 lightDir = normalize(spotLights[i].position - FragPos);
         result += CalcSpotLight(spotLights[i], norm, FragPos, viewDir, lightDir);
     }
-    FragColor = vec4(result, 1.0);
+    
+    float fogFactor = CalcFogFactor(FragPos, fogIntensity);
+    vec3 resultWithFog = mix(fogColor, result, fogFactor);
+    FragColor = vec4(resultWithFog, 1.0);
 }
 
 vec3 CalcPointLight(vec3 color, vec3 normal, vec3 fragPos, vec3 viewDir, vec3 lightDir, vec3 attenuation, vec3 lightPostion)
@@ -81,12 +84,7 @@ vec3 CalcPointLight(vec3 color, vec3 normal, vec3 fragPos, vec3 viewDir, vec3 li
     attenuation.z * (distance * distance));
 
     vec3 result = (ambient + diffuse + specular) * attenuationFactor;
-    result.x = clamp(result.x, 0.0, 1.0);
-    result.y = clamp(result.y, 0.0, 1.0);
-    result.z = clamp(result.z, 0.0, 1.0);
-    float fogFactor = CalcFogFactor(FragPos);
-    vec3 resultWithFog = mix(fogColor, result, fogFactor);
-    return resultWithFog;
+    return result;
 }
 
 vec3 CalcSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir, vec3 lightDir) {
@@ -98,7 +96,7 @@ vec3 CalcDirLight(DirLight light, vec3 normal, vec3 fragPos, vec3 viewDir) {
     return CalcPointLight(light.color, normal, fragPos, viewDir, -light.direction, vec3(1, 0, 0), vec3(0, 0, 0));
 }
 
-float CalcFogFactor(vec3 fragPos) {
+float CalcFogFactor(vec3 fragPos, float fogIntensity) {
     if (fogIntensity == 0) return 1.0f;
     float gradient = (fogIntensity * fogIntensity - 50 * fogIntensity + 60);
     float distance = length(fragPos);

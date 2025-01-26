@@ -67,4 +67,11 @@
       </Content>
     </ItemGroup>
 
+    <ItemGroup>
+      <None Remove="Resources\sand_texture.jpeg" />
+      <Content Include="Resources\sand_texture.jpeg">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
+
 </Project>

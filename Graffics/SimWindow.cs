@@ -30,7 +30,7 @@ public class SimWindow : GameWindow
         GL.ClearColor(0.2f, 0.3f, 0.3f, 1f);
         GL.Enable(EnableCap.DepthTest);
         _shader = new Shader("shaders/shader.vert", "shaders/shader.frag");
-        _scene = Scene.ShapesInSpace(_shader, Size.X / (float)Size.Y);
+        _scene = Scene.AssignmentScene(_shader, Size.X / (float)Size.Y);
 
         _shader.Use();
     }
@@ -118,15 +118,24 @@ public class SimWindow : GameWindow
             _scene.SwitchDay();
         }
 
+        if (KeyboardState.IsKeyPressed(Keys.F))
+        {
+            _scene.SwitchFog();
+        }
+
         foreach (var model in _scene.Models)
         {
             model.Update(e.Time, KeyboardState);
         }
         
+        
         foreach(var camera in _scene.Cameras)
         {
             camera.Update(e.Time);
         } 
+        _scene.Update(e.Time);
+        
+        
     }
 
     protected override void OnRenderFrame(FrameEventArgs e)

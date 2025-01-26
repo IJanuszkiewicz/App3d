@@ -12,7 +12,7 @@ class PointLamp : IGameObject
 
     public PointLamp(Vector3 color, Shader shader, IMovementController movementController)
     {
-        _light = new PointLight(movementController.Position.Position, color, new Vector3(0.6f, 0.5f, 0.2f));
+        _light = new PointLight(movementController.Position.Position, color, new Vector3(0.6f, 0.5f, 0.5f));
         var texture = Texture.LoadFromFile("Resources/shade.jpg");
         _shade = new Sphere(0.1f, 30, 30, new Material(0.65f, 0, 0, 1), movementController, texture, shader);
     }
